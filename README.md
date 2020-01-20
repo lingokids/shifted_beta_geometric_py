@@ -47,3 +47,33 @@ residual_cohort_clv = residual_cohort_lifetime * v_avg
 
 ## Requirements
 sBG requires `numpy` and `scipy` for fitting and the gauss hypergeometric function.
+
+# Redshift deployment
+
+To be able to use this library in a UDF in Redshfit, we need to deploy it as a
+[Custom Python Library Module]
+(https://docs.aws.amazon.com/redshift/latest/dg/udf-python-language-support.html#udf-importing-custom-python-library-modules)
+
+This can be done with the following commands:
+
+```bash
+cd ds
+zip -r ../ds.zip *
+aws s3 cp ../ds.zip s3://lingokids-datalake-<REGION>-<ENV>/lib
+```
+
+We then need to register the library in Redshift with:
+
+```sql
+CREATE LIBRARY ds_2
+LANGUAGE plpythonu
+FROM 's3://lingokids-datalake-<REGION>-<ENV>/lib/ds.zip'
+CREDENTIALS 'aws_iam_role=arn:aws:iam::566723156798:role/lk-redshift';
+```
+
+The library can then be imported and from a Python UDF, e.g.
+
+```python
+from projections.sbg import *
+...
+```
