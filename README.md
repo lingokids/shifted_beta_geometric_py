@@ -51,8 +51,7 @@ sBG requires `numpy` and `scipy` for fitting and the gauss hypergeometric functi
 # Redshift deployment
 
 To be able to use this library in a UDF in Redshfit, we need to deploy it as a
-[Custom Python Library Module]
-(https://docs.aws.amazon.com/redshift/latest/dg/udf-python-language-support.html#udf-importing-custom-python-library-modules)
+[Custom Python Library Module](https://docs.aws.amazon.com/redshift/latest/dg/udf-python-language-support.html#udf-importing-custom-python-library-modules)
 
 This can be done with the following commands:
 
